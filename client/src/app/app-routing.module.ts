@@ -10,6 +10,7 @@ import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { HistoryComponent } from './pages/history/history.component';
 import { OrderComponent } from './pages/order/order.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
+import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,14 @@ const routes: Routes = [
       {
         path: 'categories',
         component: CategoriesComponent,
+      },
+      {
+        path: 'categories/new',
+        component: CategoriesFormComponent,
+      },
+      {
+        path: 'categories/:id',
+        component: CategoriesFormComponent,
       },
     ],
   },

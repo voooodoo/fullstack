@@ -15,9 +15,27 @@ import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { HistoryComponent } from './pages/history/history.component';
 import { OrderComponent } from './pages/order/order.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
+import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
+
+import { PreloaderComponent } from './shared/components/preloader/preloader.component';
+import { PositionsFormComponent } from './pages/categories/categories-form/positions-form/positions-form.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, AuthLayoutComponent, SiteLayoutComponent, RegisterComponent, OverviewComponent, AnalyticsComponent, HistoryComponent, OrderComponent, CategoriesComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    AuthLayoutComponent,
+    SiteLayoutComponent,
+    RegisterComponent,
+    OverviewComponent,
+    AnalyticsComponent,
+    HistoryComponent,
+    OrderComponent,
+    CategoriesComponent,
+    PreloaderComponent,
+    CategoriesFormComponent,
+    PositionsFormComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [
     {
