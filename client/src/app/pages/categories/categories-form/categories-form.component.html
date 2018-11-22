@@ -6,7 +6,13 @@
     {{isNewCategory? 'Add': 'Edit'}} Category
   </h4>
   <span>
-    <button class="btn btn-small red"><i class="material-icons">delete</i></button>
+    <button 
+      *ngIf="!isNewCategory"
+      class="btn btn-small red" 
+      (click)="deleteCategory()"
+    >
+      <i class="material-icons">delete</i>
+    </button>
   </span>
 </div>
 <!-- prettier-ignore -->
@@ -18,17 +24,29 @@
           formControlName="name" 
           id="name" 
           type="text"
-          [ngClass]="{'invalid': form.invalid&&form.touched}"
+          [ngClass]="{'invalid': form.get('name').invalid&&form.get('name').touched}"
         >
         <label for="name">Name</label>
         <span 
           class="helper-text red-text"
-          *ngIf="form.invalid&&form.touched"
-        >Name is required</span>
+          *ngIf="form.get('name').invalid&&form.get('name').touched"
+        >
+        <span *ngIf="form.get('name').errors['required']"> Name is required</span></span>
       </div>
 
       <div>
-        <button type="button" class="waves-effect waves-light btn orange lighten-2 mb2">
+        <input 
+          type="file"
+          class="dn"
+          (change)="uploadFile($event)"
+          #input
+        >
+        <button 
+          type="button"
+          [disabled]="form.disabled || form.disabled"
+          class="waves-effect waves-light btn orange lighten-2 mb2"
+          (click)="triggerClick()"
+        >
           <i class="material-icons left">backup</i> Download Image
         </button>
       </div>
@@ -43,6 +61,6 @@
     </form>
   </div>
 
-  <div class="col s12 l4 center"><img class="responsive-img" style="height: 200px" src="cake.jpg" /></div>
+  <div class="col s12 l4 center"><img class="responsive-img" style="height: 200px" [src]="imagePreview" *ngIf="imagePreview" /></div>
 </div>
-<app-positions-form></app-positions-form>
+<app-positions-form *ngIf="category?._id" [categoryId]="category._id"></app-positions-form>

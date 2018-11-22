@@ -6,9 +6,9 @@
 <div class="row" *ngIf="(categories$ | async) as categories; else: preloader">
   <div class="col s12">
     <div class="collection" *ngIf="categories.length > 0; else: empty">
-      <a [routerLink]="['/categories', category._id]"  
+      <a *ngFor="let category of categories" [routerLink]="['/categories', category._id]"  
         class="collection-item">
-          Category 1
+          {{ category.name }}
       </a>
     </div>
   </div>
