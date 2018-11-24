@@ -1,13 +1,13 @@
 const Position = require('../models/Position');
 const errorHandler = require('../utils/errorHandler');
 
-module.exports.getCategoryById = async (req, res) => {
+module.exports.getByCategoryId = async function(req, res) {
 	try {
-		const position = await Position.find({
+		const positions = await Position.find({
 			category: req.params.categoryId,
 			user: req.user.id,
 		});
-		res.status(200).json(position);
+		res.status(200).json(positions);
 	} catch (e) {
 		errorHandler(res, e);
 	}
@@ -39,7 +39,7 @@ module.exports.remove = async (req, res) => {
 };
 module.exports.update = async (req, res) => {
 	try {
-		const position = new Position.findByIdAndUpdate({ _id: req.params.id }, { $set: req.body }, { new: true });
+		const position = await Position.findOneAndUpdate({ _id: req.params.id }, { $set: req.body }, { new: true });
 		res.status(200).json(position);
 	} catch (e) {
 		errorHandler(res, e);
