@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -19,6 +19,10 @@ import { CategoriesFormComponent } from './pages/categories/categories-form/cate
 
 import { PreloaderComponent } from './shared/components/preloader/preloader.component';
 import { PositionsFormComponent } from './pages/categories/categories-form/positions-form/positions-form.component';
+import { OrderCategoriesComponent } from './pages/order/order-categories/order-categories.component';
+import { OrderPositionsComponent } from './pages/order/order-positions/order-positions.component';
+import { HistoryListComponent } from './pages/history/history-list/history-list.component';
+import { HistoryFilterComponent } from './pages/history/history-filter/history-filter.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +39,12 @@ import { PositionsFormComponent } from './pages/categories/categories-form/posit
     PreloaderComponent,
     CategoriesFormComponent,
     PositionsFormComponent,
+    OrderCategoriesComponent,
+    OrderPositionsComponent,
+    HistoryListComponent,
+    HistoryFilterComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
+  imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

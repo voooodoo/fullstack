@@ -11,6 +11,8 @@ import { HistoryComponent } from './pages/history/history.component';
 import { OrderComponent } from './pages/order/order.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
+import { OrderCategoriesComponent } from './pages/order/order-categories/order-categories.component';
+import { OrderPositionsComponent } from './pages/order/order-positions/order-positions.component';
 
 const routes: Routes = [
   {
@@ -42,6 +44,10 @@ const routes: Routes = [
       {
         path: 'order',
         component: OrderComponent,
+        children: [
+          { path: '', component: OrderCategoriesComponent },
+          { path: ':id', component: OrderPositionsComponent },
+        ],
       },
       {
         path: 'categories',
