@@ -13,6 +13,7 @@ import {
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { Subscription } from 'rxjs';
 import { Order } from 'src/app/shared/models/order';
+import { Filter } from 'src/app/shared/models/filter';
 
 const STEP = 2;
 @Component({
@@ -28,7 +29,7 @@ export class HistoryComponent implements OnInit, OnDestroy, AfterViewInit {
   reloading = false;
   orders: Order[] = [];
   noMoreOrders = false;
-
+  filter: Filter = {};
   oSub: Subscription;
 
   offset = 0;
@@ -50,10 +51,10 @@ export class HistoryComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   private fetch(): void {
-    const params = {
+    const params = Object.assign({}, this.filter, {
       offset: this.offset,
       limit: this.limit
-    };
+    });
     this.oSub = this.ordersService.fetch(params).subscribe(orders => {
       this.loading = false;
       this.reloading = false;
@@ -65,5 +66,15 @@ export class HistoryComponent implements OnInit, OnDestroy, AfterViewInit {
     this.offset += STEP;
     this.loading = true;
     this.fetch();
+  }
+  allpyFilter(filter: Filter) {
+    this.orders = [];
+    this.offset = 0;
+    this.filter = filter;
+    this.reloading = true;
+    this.fetch();
+  }
+  isFiltered(): boolean {
+    return Object.keys(this.filter).length !== 0;
   }
 }

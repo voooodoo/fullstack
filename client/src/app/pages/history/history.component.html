@@ -3,7 +3,7 @@
   <button
     (click)="isFilterVisible = !isFilterVisible"
     class="btn btn-small"
-    [ngClass]="{ active: isFilterVisible }"
+    [ngClass]="{ active: isFilterVisible, red: isFiltered() }"
     data-tooltip="Open Filter"
     data-position="left"
     #tooltip
@@ -12,7 +12,10 @@
   </button>
 </div>
 
-<app-history-filter *ngIf="isFilterVisible"></app-history-filter>
+<app-history-filter
+  (onFilter)="allpyFilter($event)"
+  *ngIf="isFilterVisible"
+></app-history-filter>
 
 <div *ngIf="!reloading; else: reloader">
   <div *ngIf="orders.length > 0; else: empty">

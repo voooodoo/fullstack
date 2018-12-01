@@ -32,7 +32,7 @@
         <tr *ngFor="let item of order.list">
           <td>{{ item.name }}</td>
           <td>{{ item.quantity }}</td>
-          <td>{{ item.cost }}</td>
+          <td>{{ item.cost | currency }}</td>
           <td>
             <i class="material-icons pointer" (click)="removePosition(item)"
               >delete</i
@@ -43,7 +43,7 @@
     </table>
     <div class="order-summary">
       <p>
-        Price <strong>{{ order.price }}</strong>
+        Price <strong>{{ order.price | currency }}</strong>
       </p>
     </div>
   </div>
