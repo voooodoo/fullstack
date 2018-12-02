@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-const pathMod = require('path');
+const path = require('path');
 const analyticsRoutes = require('./routes/analytics');
 const authRoutes = require('./routes/auth');
 const categoryRoutes = require('./routes/category');
@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/dist/client'));
 
   app.get('*', (req, res) => {
-    res.sendFile(pathMod.resolve(__dirname, 'client', 'dist', 'client', 'index.html'));
+    res.sendFile(path.resolve(__dirname, 'client', 'dist', 'client', 'index.html'));
   });
 }
 
