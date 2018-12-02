@@ -49,6 +49,7 @@ export class AnalyticsComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // tslint:disable-next-line:no-unused-expression
       new Chart(gainCtx, createChartConfig(gainConfig));
+      // tslint:disable-next-line:no-unused-expression
       new Chart(ordersCtx, createChartConfig(ordersConfig));
 
       this.isPending = false;

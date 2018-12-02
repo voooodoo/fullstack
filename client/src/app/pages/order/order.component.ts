@@ -1,16 +1,6 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  OnDestroy,
-  AfterViewInit
-} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import {
-  MaterialService,
-  MaterialInstance
-} from 'src/app/shared/services/material.service';
+import { MaterialService, MaterialInstance } from 'src/app/shared/services/material.service';
 import { OrderService } from './order.service';
 import { OrderPosition, Order } from 'src/app/shared/models/order';
 import { OrdersService } from 'src/app/shared/services/orders.service';
@@ -31,7 +21,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private router: Router,
-    private order: OrderService,
+    public order: OrderService,
     private ordersService: OrdersService
   ) {}
 
