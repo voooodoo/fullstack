@@ -4,7 +4,7 @@ const errorHandler = require('../utils/errorHandler');
 
 module.exports.overview = async (req, res) => {
   try {
-    const allOrders = await Order.find({ user: req.user.id }).sort(1);
+    const allOrders = await Order.find({ user: req.user.id }).sort({ date: 1 });
     const ordersMap = getOrdersMap(allOrders);
     const yesterdayOrders =
       ordersMap[
@@ -14,12 +14,12 @@ module.exports.overview = async (req, res) => {
       ] || [];
 
     const totalOrders = allOrders.length;
-    const totalOrdersYesterday = yesterdayOrder.length;
+    const totalOrdersYesterday = yesterdayOrders.length;
     const totalDays = Object.keys(ordersMap).length;
-    const ordersPerDay = (totalOrders / daysNum).toFixed(0);
+    const ordersPerDay = (totalOrders / totalDays).toFixed(0);
     const ordersPercent = ((totalOrdersYesterday / ordersPerDay - 1) * 100).toFixed(2);
     const totalGain = calculatePrice(allOrders);
-    const gainPerDay = totalGain / daysNumber;
+    const gainPerDay = totalGain / totalDays;
     const gainYesterday = calculatePrice(yesterdayOrders);
     const gainPercent = ((gainYesterday / gainPerDay - 1) * 100).toFixed(2);
     const gainCompare = (gainYesterday - gainPerDay).toFixed(2);
@@ -27,13 +27,13 @@ module.exports.overview = async (req, res) => {
 
     res.status(200).json({
       gain: {
-        persent: Math.abs(+gainPercent),
+        percent: Math.abs(+gainPercent),
         compare: Math.abs(+gainCompare),
         yesterday: +gainYesterday,
         isHigher: +gainPercent > 0
       },
       orders: {
-        persent: Math.abs(+ordersPercent),
+        percent: Math.abs(+ordersPercent),
         compare: Math.abs(+ordersCompare),
         yesterday: +totalOrdersYesterday,
         isHigher: +ordersPercent > 0
@@ -44,7 +44,31 @@ module.exports.overview = async (req, res) => {
   }
 };
 
-module.exports.analytics = (req, res) => {};
+module.exports.analytics = async (req, res) => {
+  try {
+    const allOrders = await Order.find({ user: req.user.id }).sort({ date: 1 });
+    const ordersMap = getOrdersMap(allOrders);
+
+    const average = +(calculatePrice(allOrders) / Object.keys(ordersMap).length).toFixed(2);
+
+    const chart = Object.keys(ordersMap).map(label => {
+      const gain = calculatePrice(ordersMap[label]);
+      const order = ordersMap[label].length;
+      return {
+        label,
+        order,
+        gain
+      };
+    });
+
+    res.status(200).json({
+      average,
+      chart
+    });
+  } catch (e) {
+    errorHandler(res, e);
+  }
+};
 
 function getOrdersMap(orders = []) {
   const daysOrders = {};
@@ -53,7 +77,7 @@ function getOrdersMap(orders = []) {
     if (date === moment().format('DD.MM.YYYY')) {
       return;
     }
-    if (!daysOrdes[date]) {
+    if (!daysOrders[date]) {
       daysOrders[date] = [];
     }
     daysOrders[date].push(order);
